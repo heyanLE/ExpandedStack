@@ -88,6 +88,6 @@ fun popExpanded(){ }
 <img src="./gif/f.gif" width="30%" />
 
 双屏效果：
-<img src="./gif/t.gif" width="30%" />
+<img src="./gif/t.gif" width="80%" />
 
 
