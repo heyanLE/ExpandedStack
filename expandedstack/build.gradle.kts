@@ -1,5 +1,6 @@
 plugins {
     id ("com.android.library")
+    id("kotlin-android")
     id("maven-publish")
 }
 
@@ -24,6 +25,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     buildFeatures {
         compose = true
     }
@@ -44,7 +48,7 @@ afterEvaluate{
                 from(components["release"])
                 group = "com.heyanle"
                 artifactId = "ExpandedStack"
-                version = "1.2"
+                version = "1.3"
             }
         }
     }
