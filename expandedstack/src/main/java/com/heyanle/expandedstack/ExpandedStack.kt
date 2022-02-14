@@ -41,9 +41,7 @@ fun ExpandedStack(
 ) {
     val viewModel = viewModel<EStackViewModel>()
 
-    LaunchedEffect(key1 = Unit){
-        viewModel.pushMain (content = content)
-    }
+
 
     val onBackPressedDispatcherOwner = LocalOnBackPressedDispatcherOwner.current
     val onBackPressedDispatcher = onBackPressedDispatcherOwner?.onBackPressedDispatcher
@@ -51,6 +49,12 @@ fun ExpandedStack(
     val main by viewModel.mainEntity
     val expanded by viewModel.expandedEntity
     val isBackEnable by viewModel.isBackEnable
+
+    LaunchedEffect(key1 = Unit){
+        if(main == null){
+            viewModel.pushMain (content = content)
+        }
+    }
 
     val onCallBack = remember {
         object: OnBackPressedCallback(!isBackEnable){
