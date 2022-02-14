@@ -28,6 +28,7 @@ val LocalPageStackEntity = compositionLocalOf<PageStackEntity> {
 
 @Composable
 fun ExpandedStack(
+    isAnimation: Boolean,
     modifier: Modifier = Modifier,
     isHasExpanded: Boolean = false,
     deliver: @Composable ()-> Unit = {
@@ -70,7 +71,16 @@ fun ExpandedStack(
         onCallBack.isEnabled = isBackEnable
     }
 
-    val weight: Float by animateFloatAsState(if (viewModel.isExpendedShow(isExpended = isHasExpanded)) 1f else 0.0f)
+    val weight: Float by animateFloatAsState(
+        if (viewModel.isExpendedShow(isExpended = isHasExpanded)) 1f else 0.0f,
+        visibilityThreshold = 0.1f,
+    )
+
+    val w = if(isAnimation){
+        weight
+    }else{
+        if (viewModel.isExpendedShow(isExpended = isHasExpanded)) 1f else 0.0f
+    }
 
     Row(
         modifier = modifier
@@ -102,7 +112,7 @@ fun ExpandedStack(
             }
             if(weight > 0){
                 deliver()
-                Crossfade(modifier = Modifier.weight(weight = weight), targetState = expanded) {
+                Crossfade(modifier = Modifier.weight(weight = w), targetState = expanded) {
                     it?.let {
                         CompositionLocalProvider(
                             LocalPageStackEntity provides it
