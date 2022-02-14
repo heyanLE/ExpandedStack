@@ -110,7 +110,7 @@ fun ExpandedStack(
                     }
                 }
             }
-            if(weight > 0){
+            if(w > 0){
                 deliver()
                 Crossfade(modifier = Modifier.weight(weight = w), targetState = expanded) {
                     it?.let {
