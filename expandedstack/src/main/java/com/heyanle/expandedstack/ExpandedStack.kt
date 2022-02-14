@@ -5,6 +5,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -69,7 +70,7 @@ fun ExpandedStack(
         onCallBack.isEnabled = isBackEnable
     }
 
-
+    val weight: Float by animateFloatAsState(if (viewModel.isExpendedShow(isExpended = isHasExpanded)) 1f else 0.0f)
 
     Row(
         modifier = modifier
@@ -88,6 +89,8 @@ fun ExpandedStack(
 
             }
         }else{
+
+
             Crossfade(modifier = Modifier.weight(1f), targetState = main) {
                 it?.let {
                     CompositionLocalProvider(
@@ -97,9 +100,9 @@ fun ExpandedStack(
                     }
                 }
             }
-            if(viewModel.isExpendedShow(isExpended = isHasExpanded)){
+            if(weight > 0){
                 deliver()
-                Crossfade(modifier = Modifier.weight(1f), targetState = expanded) {
+                Crossfade(modifier = Modifier.weight(weight = weight), targetState = expanded) {
                     it?.let {
                         CompositionLocalProvider(
                             LocalPageStackEntity provides it
